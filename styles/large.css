@@ -1,0 +1,102 @@
+@media only screen and (min-width: 768px) {
+    body {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .content-wrapper {
+       
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    header {
+        padding: 1rem 2rem;
+    }
+
+    header img {
+        width: 60px;
+        height: 60px;
+    }
+
+    header span {
+        font-size: 1.5rem;
+    }
+
+    #hamburgerBtn {
+        display: none;
+    }
+
+    nav ul {
+        display: flex;
+        padding: 0 2rem;
+    }
+
+    nav ul li {
+        border-bottom: none;
+        flex: 1 1 auto;
+        text-align: center;
+    }
+
+    main {
+        padding: 2rem;
+    }
+
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .certificate {
+        grid-column: 1 / -1;
+    }
+
+    .course-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .location-content img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+    }
+
+    .course-card {
+        padding: 1.5rem;
+        transition: transform 0.2s ease;
+    }
+
+    .course-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .course-card {
+        margin: 0;
+    }
+
+    /* Layout específico para desktop similar al ejemplo */
+    @media only screen and (min-width: 992px) {
+        main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        h1 {
+            grid-column: 1 / -1;
+        }
+
+        .course-work, .location {
+            margin-bottom: 1rem;
+        }
+
+        .certificate {
+            grid-column: 1 / -1;
+            grid-row: 3;
+        }
+    }
+}

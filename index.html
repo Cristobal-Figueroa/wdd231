@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WDD231 Course Home Page for Cristobal Figueroa - Web Frontend Development II">
+    <meta name="author" content="Cristobal Figueroa">
+    <title>WDD231 - Cristobal Figueroa</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/small.css">
+    <link rel="stylesheet" href="styles/large.css">
+    <script src="scripts/date.js" defer></script>
+    <script src="scripts/navigation.js" defer></script>
+    <script src="scripts/course.js" defer></script>
+</head>
+<body>
+    <header class="content-wrapper">
+        <img src="images/profile.jpg" alt="Foto de Cristobal Figueroa">
+        <span>Cristobal Figueroa</span>
+        <button id="hamburgerBtn" aria-label="Menu" aria-controls="primaryNav" aria-expanded="false">&#9776;</button>
+    </header>
+    
+    <nav class="content-wrapper">
+        <ul id="primaryNav">
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="chamber.html">Chamber</a></li>
+            <li><a href="final.html">Final</a></li>
+            <li><a href="https://github.com/cristobalfigueroa" target="_blank">GitHub Profile</a></li>
+            <li><a href="https://linkedin.com/in/cristobalfigueroa" target="_blank">LinkedIn</a></li>
+        </ul>
+    </nav>
+    
+    <main class="content-wrapper">
+        <h1>Home</h1>
+        
+        <section class="course-work">
+            <h2>Course Work</h2>
+            <ul>
+                <li>Week 1: Course Home Page</li>
+                <li>Week 2: Chamber of Commerce Site</li>
+                <li>Week 3: Final Project</li>
+            </ul>
+        </section>
+        
+        <section class="location">
+            <h2>Chillán, Chile</h2>
+            <div class="location-content">
+                <img src="images/chile.jpg" alt="Paisaje de Chile">
+                <p>Chile</p>
+            </div>
+        </section>
+        
+        <section class="certificate">
+            <h2>Web and Computer Programming Certificate</h2>
+            <div class="filter-buttons" role="group" aria-label="Filtrar cursos">
+                <button id="allBtn" class="active">All</button>
+                <button id="cseBtn">CSE</button>
+                <button id="wddBtn">WDD</button>
+            </div>
+            <div id="courseContainer" class="course-container" role="list">
+                <!-- Courses will be dynamically added here -->
+            </div>
+            <div class="credits-info" aria-live="polite">
+                <p>Total Credits: <span id="totalCredits">0</span></p>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="content-wrapper">
+        <p>&copy; <span id="currentYear"></span> 🧉 Cristobal Figueroa 🧉 - Chillán, Chile</p>
+        <p id="lastModified"></p>
+    </footer>
+</body>
+</html>

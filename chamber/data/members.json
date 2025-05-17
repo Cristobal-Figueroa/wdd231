@@ -8,15 +8,7 @@
     "membershipLevel": 3,
     "description": "Professional website design and development services for businesses in Idaho."
   },
-  {
-    "name": "Surge Web Design",
-    "address": "4072 E Arch Drive, Meridian ID 83646",
-    "phone": "(208) 631-0640",
-    "website": "https://www.surgewebdesign.com/",
-    "image": "surge-webdesign.webp",
-    "membershipLevel": 3,
-    "description": "Custom web design solutions with a focus on growth and performance."
-  },
+
   {
     "name": "Graphic Zen",
     "address": "1788 E Summerplace Court, Meridian ID 83646",
@@ -70,5 +62,14 @@
     "image": "cerium_logo.svg",
     "membershipLevel": 1,
     "description": "Corporate IT solutions and network services."
+  },
+  {
+    "name": "Surge Web Design",
+    "address": "4072 E Arch Drive, Meridian ID 83646",
+    "phone": "(208) 631-0640",
+    "website": "https://www.surgewebdesign.com/",
+    "image": "surge-webdesign.webp",
+    "membershipLevel": 3,
+    "description": "Custom web design solutions with a focus on growth and performance."
   }
 ]

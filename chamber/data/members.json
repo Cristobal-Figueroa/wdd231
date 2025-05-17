@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Idaho Websites",
+    "address": "2115 S Vista Avenue, Boise ID 83705",
+    "phone": "(208) 342-9386",
+    "website": "https://idahowebsites.com/",
+    "image": "IDWeb.png",
+    "membershipLevel": 3,
+    "description": "Professional website design and development services for businesses in Idaho."
+  },
+  {
+    "name": "Surge Web Design",
+    "address": "4072 E Arch Drive, Meridian ID 83646",
+    "phone": "(208) 631-0640",
+    "website": "https://www.surgewebdesign.com/",
+    "image": "surge-webdesign.webp",
+    "membershipLevel": 3,
+    "description": "Custom web design solutions with a focus on growth and performance."
+  },
+  {
+    "name": "Graphic Zen",
+    "address": "1788 E Summerplace Court, Meridian ID 83646",
+    "phone": "(208) 631-4984",
+    "website": "https://graphiczen.com/",
+    "image": "graphic-zen.png",
+    "membershipLevel": 2,
+    "description": "Creative graphic design and branding solutions for businesses of all sizes."
+  },
+  {
+    "name": "Peppershock Media",
+    "address": "1215 3rd Street, Nampa ID 83651",
+    "phone": "(208) 461-5070",
+    "website": "https://www.peppershock.com/",
+    "image": "peppershock-media.png",
+    "membershipLevel": 3,
+    "description": "Full-service media production and marketing agency."
+  },
+  {
+    "name": "Flash Tech Services",
+    "address": "Star, Idaho 83669",
+    "phone": "(208) 488-5810",
+    "website": "https://flashtechnicalservices.com/",
+    "image": "flash-tech.png",
+    "membershipLevel": 2,
+    "description": "IT support and technical services for small to medium businesses."
+  },
+  {
+    "name": "Metro Express Car Wash",
+    "address": "1725 E Overland Road, Meridian ID 83642",
+    "phone": "(208) 888-4073",
+    "website": "https://www.metroexpresscarwash.com/",
+    "image": "Metro_Express_Sparkle.png",
+    "membershipLevel": 1,
+    "description": "Premium car wash services with multiple locations in the Treasure Valley."
+  },
+  {
+    "name": "Boise Web",
+    "address": "Boise, Idaho",
+    "phone": "(208) 514-2556",
+    "website": "https://www.boiseweb.net",
+    "image": "Boiseweb.svg",
+    "membershipLevel": 2,
+    "description": "Professional web design and development services. Contact: contact@boiseweb.net"
+  },
+  {
+    "name": "Cerium Networks",
+    "address": "1636 West 1st, Spokane, WA 99201",
+    "phone": "(800) 217-0933",
+    "website": "https://ceriumnetworks.com",
+    "image": "cerium_logo.svg",
+    "membershipLevel": 1,
+    "description": "Corporate IT solutions and network services."
+  }
+]

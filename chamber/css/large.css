@@ -1,0 +1,45 @@
+/* Large view styles - for larger desktops */
+@media only screen and (min-width: 64rem) {
+    /* Header */
+    .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .site-name h1 {
+        font-size: 1.8rem;
+    }
+    
+    .site-name h2 {
+        font-size: 1.2rem;
+    }
+    
+    /* Navigation */
+    #primary-nav a {
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
+    }
+    
+    /* Main Content */
+    main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+    
+    /* Directory */
+    #directory-container.grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* Footer */
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .footer-base {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}

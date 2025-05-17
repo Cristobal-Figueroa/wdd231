@@ -1,0 +1,64 @@
+/* Medium view styles - for tablets and small desktops */
+@media only screen and (min-width: 35rem) {
+    /* Header */
+    .header-content {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 1rem;
+    }
+    
+    .logo {
+        margin-bottom: 0;
+    }
+    
+    /* Navigation */
+    #hamburger-btn {
+        display: none;
+    }
+    
+    #primary-nav {
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+    #primary-nav li {
+        border-bottom: none;
+    }
+    
+    #primary-nav a {
+        padding: 1rem 0.75rem;
+    }
+    
+    /* Directory */
+    #directory-container.grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #directory-container.list .directory-card {
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    #directory-container.list .directory-card img {
+        width: 100px;
+        height: 100px;
+        margin-right: 1rem;
+    }
+    
+    /* Footer */
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+    
+    .footer-logo {
+        flex-direction: row;
+        margin-bottom: 0;
+    }
+    
+    .footer-logo img {
+        margin-right: 1rem;
+        margin-bottom: 0;
+    }
+}

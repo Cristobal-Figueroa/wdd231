@@ -1,8 +1,8 @@
 // Weather API integration for Boise Chamber of Commerce
 
 // OpenWeatherMap API configuration
-// Usando la API OneCall 3.0 de OpenWeatherMap
-const useMockData = false; // Usar datos reales
+// Usando la API Weather y Forecast de OpenWeatherMap
+const useMockData = false; // Intentar usar datos reales
 
 // Configuración de la API
 const WEATHER_API_KEY = 'c973dc34ddcb53eb3fad3ae8797c32c5';
@@ -11,9 +11,9 @@ const WEATHER_API_KEY = 'c973dc34ddcb53eb3fad3ae8797c32c5';
 const LATITUDE = '43.6150';
 const LONGITUDE = '-116.2023';
 
-// URL para la API OneCall 3.0
-// Excluimos minutely y hourly para reducir el tamaño de los datos
-const ONECALL_API_URL = 'https://api.openweathermap.org/data/3.0/onecall?lat=' + LATITUDE + '&lon=' + LONGITUDE + '&exclude=minutely,hourly&units=imperial&appid=' + WEATHER_API_KEY;
+// URLs para las APIs de clima actual y pronóstico
+const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + LATITUDE + '&lon=' + LONGITUDE + '&units=imperial&appid=' + WEATHER_API_KEY;
+const FORECAST_API_URL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + LATITUDE + '&lon=' + LONGITUDE + '&units=imperial&appid=' + WEATHER_API_KEY;
 
 // DOM elements
 const currentTempElement = document.getElementById('current-temp');
@@ -105,42 +105,55 @@ for (let i = 1; i <= 3; i++) {
     });
 }
 
-// Fetch weather data (current and forecast) using OneCall API
-async function fetchWeatherData() {
+// Fetch current weather data
+async function fetchCurrentWeather() {
     if (useMockData) {
         // Usar datos de ejemplo
         displayCurrentWeather(mockCurrentWeather);
+        return;
+    }
+    
+    try {
+        const response = await fetch(WEATHER_API_URL);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        displayCurrentWeather(data);
+    } catch (error) {
+        console.error('Error fetching current weather data:', error);
+        displayWeatherError();
+    }
+}
+
+// Fetch weather forecast
+async function fetchWeatherForecast() {
+    if (useMockData) {
+        // Usar datos de ejemplo
         displayForecast(mockForecast);
         return;
     }
     
     try {
-        const response = await fetch(ONECALL_API_URL);
+        const response = await fetch(FORECAST_API_URL);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        
-        // Procesar los datos para el clima actual y el pronóstico
-        displayCurrentWeather(data);
         displayForecast(data);
     } catch (error) {
-        console.error('Error fetching weather data:', error);
-        displayWeatherError();
+        console.error('Error fetching forecast data:', error);
         displayForecastError();
     }
 }
 
-// Display current weather from OneCall API data
+// Display current weather
 function displayCurrentWeather(data) {
     try {
-        // En la API OneCall, los datos actuales están en 'current'
-        const currentData = useMockData ? data : data.current;
-        
         // Extract weather data
-        const temperature = Math.round(useMockData ? data.main.temp : currentData.temp);
-        const description = useMockData ? data.weather[0].description : currentData.weather[0].description;
-        const iconCode = useMockData ? data.weather[0].icon : currentData.weather[0].icon;
+        const temperature = Math.round(data.main.temp);
+        const description = data.weather[0].description;
+        const iconCode = data.weather[0].icon;
         const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
         
         // Update DOM elements
@@ -154,47 +167,39 @@ function displayCurrentWeather(data) {
     }
 }
 
-// Display forecast from OneCall API data
+// Display forecast
 function displayForecast(data) {
     try {
         // Clear forecast container
         forecastContainer.innerHTML = '';
         
-        // En la API OneCall, el pronóstico diario está en 'daily'
-        const dailyData = useMockData ? data.list : data.daily;
+        // Get forecast for noon each day (12:00)
+        const dailyForecasts = data.list.filter(item => item.dt_txt.includes('12:00:00'));
         
-        // Tomar solo los primeros 3 días para el pronóstico
-        const threeDayForecast = useMockData ? dailyData : dailyData.slice(1, 4);
+        // Take only the first 3 days
+        const threeDayForecast = dailyForecasts.slice(0, 3);
         
         // Create forecast elements
-        threeDayForecast.forEach((day, index) => {
+        threeDayForecast.forEach(day => {
             // Create forecast day element
             const forecastDay = document.createElement('div');
             forecastDay.className = 'forecast-day';
             
-            // Format date based on data source
-            let dayName;
-            if (useMockData) {
-                // Para datos de ejemplo
-                const date = new Date(day.dt * 1000);
-                dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
-            } else {
-                // Para datos de la API OneCall
-                const date = new Date((day.dt) * 1000);
-                dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
-            }
+            // Format date
+            const date = new Date(day.dt * 1000);
+            const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
             
-            // Round temperature based on data source
-            const temp = Math.round(useMockData ? day.main.temp : day.temp.day);
+            // Round temperature
+            const temp = Math.round(day.main.temp);
             
-            // Get weather icon based on data source
-            const iconCode = useMockData ? day.weather[0].icon : day.weather[0].icon;
+            // Get weather icon
+            const iconCode = day.weather[0].icon;
             const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
             
             // Create forecast HTML
             forecastDay.innerHTML = `
                 <p class="forecast-date">${dayName}</p>
-                <img src="${iconUrl}" alt="${useMockData ? day.weather[0].description : day.weather[0].description}" class="forecast-icon">
+                <img src="${iconUrl}" alt="${day.weather[0].description}" class="forecast-icon">
                 <p class="forecast-temp">${temp}°F</p>
             `;
             
@@ -262,6 +267,7 @@ function displayForecastError() {
 
 // Initialize weather data on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Llamar a la función que obtiene tanto el clima actual como el pronóstico
-    fetchWeatherData();
+    // Obtener el clima actual y el pronóstico
+    fetchCurrentWeather();
+    fetchWeatherForecast();
 });

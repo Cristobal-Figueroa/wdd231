@@ -1,14 +1,15 @@
 // Weather API integration for Boise Chamber of Commerce
 
 // OpenWeatherMap API configuration
-// Usando la API key proporcionada para obtener datos reales
-const useMockData = false; // Usando datos reales
+// Debido a problemas con la API, volvemos a usar datos de ejemplo
+const useMockData = true; // Usando datos de ejemplo
 
-// Configuración real de la API
-const WEATHER_API_KEY = 'c973dc34ddcb53eb3fad3ae8797c32c5'; // API key proporcionada
+// Configuración real de la API - Nota: puede haber problemas con la API key o limitaciones de CORS
+// Para un entorno de producción, necesitarías un backend o proxy para evitar exponer la API key
+const WEATHER_API_KEY = 'c973dc34ddcb53eb3fad3ae8797c32c5'; 
 const CITY_ID = '5586437'; // Boise, ID city ID
-const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&units=imperial&appid=${WEATHER_API_KEY}`;
-const FORECAST_API_URL = `https://api.openweathermap.org/data/2.5/forecast?id=${CITY_ID}&units=imperial&appid=${WEATHER_API_KEY}`;
+const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather?id=' + CITY_ID + '&units=imperial&appid=' + WEATHER_API_KEY;
+const FORECAST_API_URL = 'https://api.openweathermap.org/data/2.5/forecast?id=' + CITY_ID + '&units=imperial&appid=' + WEATHER_API_KEY;
 
 // DOM elements
 const currentTempElement = document.getElementById('current-temp');

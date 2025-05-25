@@ -1,15 +1,19 @@
 // Weather API integration for Boise Chamber of Commerce
 
 // OpenWeatherMap API configuration
-// Debido a problemas con la API, volvemos a usar datos de ejemplo
-const useMockData = true; // Usando datos de ejemplo
+// Usando la API OneCall 3.0 de OpenWeatherMap
+const useMockData = false; // Usar datos reales
 
-// Configuración real de la API - Nota: puede haber problemas con la API key o limitaciones de CORS
-// Para un entorno de producción, necesitarías un backend o proxy para evitar exponer la API key
-const WEATHER_API_KEY = 'c973dc34ddcb53eb3fad3ae8797c32c5'; 
-const CITY_ID = '5586437'; // Boise, ID city ID
-const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather?id=' + CITY_ID + '&units=imperial&appid=' + WEATHER_API_KEY;
-const FORECAST_API_URL = 'https://api.openweathermap.org/data/2.5/forecast?id=' + CITY_ID + '&units=imperial&appid=' + WEATHER_API_KEY;
+// Configuración de la API
+const WEATHER_API_KEY = 'c973dc34ddcb53eb3fad3ae8797c32c5';
+
+// Coordenadas geográficas para Boise, Idaho
+const LATITUDE = '43.6150';
+const LONGITUDE = '-116.2023';
+
+// URL para la API OneCall 3.0
+// Excluimos minutely y hourly para reducir el tamaño de los datos
+const ONECALL_API_URL = 'https://api.openweathermap.org/data/3.0/onecall?lat=' + LATITUDE + '&lon=' + LONGITUDE + '&exclude=minutely,hourly&units=imperial&appid=' + WEATHER_API_KEY;
 
 // DOM elements
 const currentTempElement = document.getElementById('current-temp');
@@ -17,93 +21,188 @@ const weatherDescElement = document.getElementById('weather-desc');
 const weatherIconElement = document.getElementById('weather-icon');
 const forecastContainer = document.getElementById('forecast-container');
 
-// Datos de ejemplo para desarrollo/pruebas
+// Datos simulados para el clima actual y pronóstico
+// Estos datos cumplen con el formato de la API de OpenWeatherMap
+// pero son generados localmente para evitar problemas de CORS o API key
+
+// Obtener la fecha actual para generar datos dinámicos
+const currentDate = new Date();
+const currentMonth = currentDate.getMonth();
+
+// Determinar la temporada para generar datos climáticos más realistas para Boise
+let seasonTemp, seasonWeather;
+
+// Ajustar temperatura y clima según la temporada en Boise
+if (currentMonth >= 11 || currentMonth <= 1) { // Invierno (Dic-Feb)
+    seasonTemp = Math.floor(Math.random() * 15) + 25; // 25-40°F
+    seasonWeather = [
+        { description: "nieve ligera", icon: "13d" },
+        { description: "nublado", icon: "04d" },
+        { description: "parcialmente nublado", icon: "02d" }
+    ];
+} else if (currentMonth >= 2 && currentMonth <= 4) { // Primavera (Mar-May)
+    seasonTemp = Math.floor(Math.random() * 20) + 45; // 45-65°F
+    seasonWeather = [
+        { description: "lluvia ligera", icon: "10d" },
+        { description: "parcialmente nublado", icon: "02d" },
+        { description: "cielo despejado", icon: "01d" }
+    ];
+} else if (currentMonth >= 5 && currentMonth <= 8) { // Verano (Jun-Sep)
+    seasonTemp = Math.floor(Math.random() * 20) + 75; // 75-95°F
+    seasonWeather = [
+        { description: "cielo despejado", icon: "01d" },
+        { description: "parcialmente nublado", icon: "02d" },
+        { description: "soleado", icon: "01d" }
+    ];
+} else { // Otoño (Sep-Nov)
+    seasonTemp = Math.floor(Math.random() * 25) + 50; // 50-75°F
+    seasonWeather = [
+        { description: "parcialmente nublado", icon: "02d" },
+        { description: "lluvia ligera", icon: "10d" },
+        { description: "cielo despejado", icon: "01d" }
+    ];
+}
+
+// Seleccionar un clima aleatorio para el día actual
+const randomWeatherIndex = Math.floor(Math.random() * seasonWeather.length);
+
+// Datos simulados para el clima actual
 const mockCurrentWeather = {
     main: {
-        temp: 75.2
+        temp: seasonTemp
     },
-    weather: [{
-        description: "cielo despejado",
-        icon: "01d"
-    }]
+    weather: [seasonWeather[randomWeatherIndex]]
 };
 
+// Generar pronóstico para los próximos 3 días
 const mockForecast = {
-    list: [
-        {
-            dt: Math.floor(Date.now() / 1000) + 86400, // Mañana
-            dt_txt: new Date(Date.now() + 86400000).toISOString().split('T')[0] + ' 12:00:00',
-            main: { temp: 78.5 },
-            weather: [{ description: "parcialmente nublado", icon: "02d" }]
-        },
-        {
-            dt: Math.floor(Date.now() / 1000) + 172800, // Pasado mañana
-            dt_txt: new Date(Date.now() + 172800000).toISOString().split('T')[0] + ' 12:00:00',
-            main: { temp: 80.1 },
-            weather: [{ description: "soleado", icon: "01d" }]
-        },
-        {
-            dt: Math.floor(Date.now() / 1000) + 259200, // En tres días
-            dt_txt: new Date(Date.now() + 259200000).toISOString().split('T')[0] + ' 12:00:00',
-            main: { temp: 76.8 },
-            weather: [{ description: "lluvia ligera", icon: "10d" }]
-        }
-    ]
+    list: []
 };
 
-// Fetch current weather data
-async function fetchCurrentWeather() {
+// Generar datos para cada día del pronóstico
+for (let i = 1; i <= 3; i++) {
+    // Calcular la fecha para este día del pronóstico
+    const forecastDate = new Date(currentDate);
+    forecastDate.setDate(currentDate.getDate() + i);
+    
+    // Variar la temperatura ligeramente para cada día
+    const tempVariation = Math.floor(Math.random() * 10) - 5; // -5 a +5 grados de variación
+    
+    // Seleccionar un clima aleatorio para este día
+    const forecastWeatherIndex = Math.floor(Math.random() * seasonWeather.length);
+    
+    // Añadir este día al pronóstico
+    mockForecast.list.push({
+        dt: Math.floor(forecastDate.getTime() / 1000),
+        dt_txt: forecastDate.toISOString().split('T')[0] + ' 12:00:00',
+        main: { 
+            temp: seasonTemp + tempVariation 
+        },
+        weather: [{ 
+            description: seasonWeather[forecastWeatherIndex].description, 
+            icon: seasonWeather[forecastWeatherIndex].icon 
+        }]
+    });
+}
+
+// Fetch weather data (current and forecast) using OneCall API
+async function fetchWeatherData() {
     if (useMockData) {
         // Usar datos de ejemplo
         displayCurrentWeather(mockCurrentWeather);
-        return;
-    }
-    
-    try {
-        const response = await fetch(WEATHER_API_URL);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        displayCurrentWeather(data);
-    } catch (error) {
-        console.error('Error fetching current weather data:', error);
-        displayWeatherError();
-    }
-}
-
-// Display current weather
-function displayCurrentWeather(data) {
-    // Extract weather data
-    const temperature = Math.round(data.main.temp);
-    const description = data.weather[0].description;
-    const iconCode = data.weather[0].icon;
-    const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-    
-    // Update DOM elements
-    currentTempElement.textContent = temperature;
-    weatherDescElement.textContent = description;
-    weatherIconElement.src = iconUrl;
-    weatherIconElement.alt = description;
-}
-
-// Fetch weather forecast
-async function fetchWeatherForecast() {
-    if (useMockData) {
-        // Usar datos de ejemplo
         displayForecast(mockForecast);
         return;
     }
     
     try {
-        const response = await fetch(FORECAST_API_URL);
+        const response = await fetch(ONECALL_API_URL);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
+        
+        // Procesar los datos para el clima actual y el pronóstico
+        displayCurrentWeather(data);
         displayForecast(data);
     } catch (error) {
-        console.error('Error fetching forecast data:', error);
+        console.error('Error fetching weather data:', error);
+        displayWeatherError();
+        displayForecastError();
+    }
+}
+
+// Display current weather from OneCall API data
+function displayCurrentWeather(data) {
+    try {
+        // En la API OneCall, los datos actuales están en 'current'
+        const currentData = useMockData ? data : data.current;
+        
+        // Extract weather data
+        const temperature = Math.round(useMockData ? data.main.temp : currentData.temp);
+        const description = useMockData ? data.weather[0].description : currentData.weather[0].description;
+        const iconCode = useMockData ? data.weather[0].icon : currentData.weather[0].icon;
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+        
+        // Update DOM elements
+        currentTempElement.textContent = temperature;
+        weatherDescElement.textContent = description;
+        weatherIconElement.src = iconUrl;
+        weatherIconElement.alt = description;
+    } catch (error) {
+        console.error('Error displaying current weather:', error);
+        displayWeatherError();
+    }
+}
+
+// Display forecast from OneCall API data
+function displayForecast(data) {
+    try {
+        // Clear forecast container
+        forecastContainer.innerHTML = '';
+        
+        // En la API OneCall, el pronóstico diario está en 'daily'
+        const dailyData = useMockData ? data.list : data.daily;
+        
+        // Tomar solo los primeros 3 días para el pronóstico
+        const threeDayForecast = useMockData ? dailyData : dailyData.slice(1, 4);
+        
+        // Create forecast elements
+        threeDayForecast.forEach((day, index) => {
+            // Create forecast day element
+            const forecastDay = document.createElement('div');
+            forecastDay.className = 'forecast-day';
+            
+            // Format date based on data source
+            let dayName;
+            if (useMockData) {
+                // Para datos de ejemplo
+                const date = new Date(day.dt * 1000);
+                dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+            } else {
+                // Para datos de la API OneCall
+                const date = new Date((day.dt) * 1000);
+                dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+            }
+            
+            // Round temperature based on data source
+            const temp = Math.round(useMockData ? day.main.temp : day.temp.day);
+            
+            // Get weather icon based on data source
+            const iconCode = useMockData ? day.weather[0].icon : day.weather[0].icon;
+            const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
+            
+            // Create forecast HTML
+            forecastDay.innerHTML = `
+                <p class="forecast-date">${dayName}</p>
+                <img src="${iconUrl}" alt="${useMockData ? day.weather[0].description : day.weather[0].description}" class="forecast-icon">
+                <p class="forecast-temp">${temp}°F</p>
+            `;
+            
+            // Add to forecast container
+            forecastContainer.appendChild(forecastDay);
+        });
+    } catch (error) {
+        console.error('Error displaying forecast:', error);
         displayForecastError();
     }
 }
@@ -163,6 +262,6 @@ function displayForecastError() {
 
 // Initialize weather data on page load
 document.addEventListener('DOMContentLoaded', function() {
-    fetchCurrentWeather();
-    fetchWeatherForecast();
+    // Llamar a la función que obtiene tanto el clima actual como el pronóstico
+    fetchWeatherData();
 });

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Home page of the Boise Chamber of Commerce, Idaho">
+    <meta name="author" content="Cristobal Figueroa">
+    
+    <!-- Facebook Open Graph meta tags -->
+    <meta property="og:title" content="Boise Chamber of Commerce">
+    <meta property="og:description" content="Welcome to the Boise Chamber of Commerce - connecting businesses and promoting economic growth in Boise, Idaho">
+    <meta property="og:image" content="images/logo.svg">
+    <meta property="og:url" content="https://cristobal-figueroa.github.io/wdd231/chamber/index.html">
+    
+    <title>Home | Boise Chamber of Commerce</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.svg">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/medium.css">
+    <link rel="stylesheet" href="css/large.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="images/logo.svg" alt="Boise Chamber of Commerce Logo">
+                <div class="site-name">
+                    <h1>Chamber of Commerce</h1>
+                    <h2>Boise, Idaho</h2>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <button id="hamburger-btn">&#9776;</button>
+                    <ul id="primary-nav">
+                        <li class="active"><a href="index.html">Home</a></li>
+                        <li><a href="discover.html">Discover</a></li>
+                        <li><a href="directory.html">Directory</a></li>
+                        <li><a href="join.html">Join</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main class="home">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to Boise Chamber of Commerce</h1>
+                <p>Connecting businesses and promoting economic growth in Boise, Idaho</p>
+                <a href="join.html" class="cta-button">Join the Chamber</a>
+            </div>
+            <img src="images/boise-skyline.jpg" alt="Boise Skyline" class="hero-image">
+        </section>
+        
+        <!-- Current Events Section -->
+        <section class="events">
+            <h2>Current Events</h2>
+            <div class="event-card">
+                <h3>Business Networking Breakfast</h3>
+                <p class="event-date">June 15, 2025 | 7:30 AM - 9:00 AM</p>
+                <p class="event-location">Boise Centre, 850 W Front St</p>
+                <p>Join us for our monthly networking breakfast featuring guest speaker Sarah Johnson, CEO of Idaho Tech Solutions.</p>
+                <a href="#" class="event-link">Learn More</a>
+            </div>
+            <div class="event-card">
+                <h3>Small Business Workshop</h3>
+                <p class="event-date">June 22, 2025 | 1:00 PM - 4:00 PM</p>
+                <p class="event-location">Boise Public Library, 715 S Capitol Blvd</p>
+                <p>Learn essential strategies for growing your small business in today's digital marketplace.</p>
+                <a href="#" class="event-link">Register Now</a>
+            </div>
+        </section>
+        
+        <!-- Weather Section -->
+        <section class="weather">
+            <h2>Boise Weather</h2>
+            <div class="weather-current">
+                <div class="weather-icon">
+                    <img id="weather-icon" src="" alt="Weather icon">
+                </div>
+                <div class="weather-info">
+                    <p class="temperature"><span id="current-temp"></span>°F</p>
+                    <p class="description" id="weather-desc"></p>
+                </div>
+            </div>
+            <div class="weather-forecast" id="forecast-container">
+                <!-- Forecast will be populated by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- Spotlights Section -->
+        <section class="spotlights">
+            <h2>Business Spotlights</h2>
+            <div id="spotlights-container">
+                <!-- Spotlights will be populated by JavaScript -->
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="images/logo.svg" alt="Boise Chamber of Commerce Logo">
+                <div class="footer-name">
+                    <h3>Boise Chamber of Commerce</h3>
+                    <p>1234 Main Street, Boise, ID 83702</p>
+                </div>
+            </div>
+            <div class="footer-contact">
+                <p>info@boisechamber.org</p>
+                <p>(208) 555-1234</p>
+                <p><a href="https://maps.google.com">Location Map</a></p>
+            </div>
+        </div>
+        <div class="footer-base">
+            <p>&copy; <span id="current-year"></span> Boise Chamber of Commerce | Cristobal Figueroa | WDD 231</p>
+            <p>Last Modified: <span id="last-modified"></span></p>
+        </div>
+    </footer>
+    
+    <script src="js/script.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/spotlights.js"></script>
+</body>
+</html>

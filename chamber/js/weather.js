@@ -1,19 +1,15 @@
 // Weather API integration for Boise Chamber of Commerce
 
-// OpenWeatherMap API configuration
-// Usando la API Weather y Forecast de OpenWeatherMap
-const useMockData = false; // Intentar usar datos reales
+// Usando datos reales de la API de OpenWeatherMap
+const useMockData = false; // Usar datos reales
 
-// Configuración de la API
+// Configuración para OpenWeatherMap
 const WEATHER_API_KEY = 'c973dc34ddcb53eb3fad3ae8797c32c5';
+const CITY_NAME = 'Boise,us';
 
-// Coordenadas geográficas para Boise, Idaho
-const LATITUDE = '43.6150';
-const LONGITUDE = '-116.2023';
-
-// URLs para las APIs de clima actual y pronóstico
-const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + LATITUDE + '&lon=' + LONGITUDE + '&units=imperial&appid=' + WEATHER_API_KEY;
-const FORECAST_API_URL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + LATITUDE + '&lon=' + LONGITUDE + '&units=imperial&appid=' + WEATHER_API_KEY;
+// URLs para las APIs
+const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&units=imperial&appid=${WEATHER_API_KEY}`;
+const FORECAST_API_URL = `https://api.openweathermap.org/data/2.5/forecast?q=${CITY_NAME}&units=imperial&appid=${WEATHER_API_KEY}`;
 
 // DOM elements
 const currentTempElement = document.getElementById('current-temp');
@@ -107,12 +103,6 @@ for (let i = 1; i <= 3; i++) {
 
 // Fetch current weather data
 async function fetchCurrentWeather() {
-    if (useMockData) {
-        // Usar datos de ejemplo
-        displayCurrentWeather(mockCurrentWeather);
-        return;
-    }
-    
     try {
         const response = await fetch(WEATHER_API_URL);
         if (!response.ok) {
@@ -126,14 +116,8 @@ async function fetchCurrentWeather() {
     }
 }
 
-// Fetch weather forecast
-async function fetchWeatherForecast() {
-    if (useMockData) {
-        // Usar datos de ejemplo
-        displayForecast(mockForecast);
-        return;
-    }
-    
+// Fetch forecast data
+async function fetchForecast() {
     try {
         const response = await fetch(FORECAST_API_URL);
         if (!response.ok) {
@@ -150,7 +134,7 @@ async function fetchWeatherForecast() {
 // Display current weather
 function displayCurrentWeather(data) {
     try {
-        // Extract weather data
+        // Extract weather data from OpenWeatherMap format
         const temperature = Math.round(data.main.temp);
         const description = data.weather[0].description;
         const iconCode = data.weather[0].icon;
@@ -173,37 +157,75 @@ function displayForecast(data) {
         // Clear forecast container
         forecastContainer.innerHTML = '';
         
-        // Get forecast for noon each day (12:00)
-        const dailyForecasts = data.list.filter(item => item.dt_txt.includes('12:00:00'));
+        // Get forecast data for the next 3 days at noon
+        const forecastList = data.list;
+        const dailyForecasts = [];
         
-        // Take only the first 3 days
-        const threeDayForecast = dailyForecasts.slice(0, 3);
+        // Filtrar para obtener un pronóstico por día (al mediodía)
+        const processedDates = new Set();
         
-        // Create forecast elements
-        threeDayForecast.forEach(day => {
-            // Create forecast day element
+        for (const forecast of forecastList) {
+            // Extraer la fecha (sin la hora)
+            const forecastDate = forecast.dt_txt.split(' ')[0];
+            const forecastHour = parseInt(forecast.dt_txt.split(' ')[1].split(':')[0]);
+            
+            // Si ya procesamos esta fecha o no es cercana al mediodía (12-15h), omitir
+            if (processedDates.has(forecastDate) || forecastHour < 12 || forecastHour > 15) {
+                continue;
+            }
+            
+            // Añadir esta fecha al conjunto de fechas procesadas
+            processedDates.add(forecastDate);
+            dailyForecasts.push(forecast);
+            
+            // Si ya tenemos 3 días, terminar
+            if (dailyForecasts.length >= 3) {
+                break;
+            }
+        }
+        
+        // Si no tenemos suficientes pronósticos, usar los primeros disponibles
+        if (dailyForecasts.length < 3 && forecastList.length >= 3) {
+            const uniqueDays = new Set();
+            for (const forecast of forecastList) {
+                const forecastDate = forecast.dt_txt.split(' ')[0];
+                if (!uniqueDays.has(forecastDate)) {
+                    uniqueDays.add(forecastDate);
+                    if (!processedDates.has(forecastDate)) {
+                        processedDates.add(forecastDate);
+                        dailyForecasts.push(forecast);
+                    }
+                }
+                if (dailyForecasts.length >= 3) {
+                    break;
+                }
+            }
+        }
+        
+        // Crear elementos para cada día del pronóstico
+        dailyForecasts.forEach(day => {
+            // Crear el elemento del día
             const forecastDay = document.createElement('div');
             forecastDay.className = 'forecast-day';
             
-            // Format date
+            // Formatear la fecha
             const date = new Date(day.dt * 1000);
             const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
             
-            // Round temperature
+            // Obtener temperatura y datos del clima
             const temp = Math.round(day.main.temp);
-            
-            // Get weather icon
             const iconCode = day.weather[0].icon;
             const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
+            const description = day.weather[0].description;
             
-            // Create forecast HTML
+            // Crear el HTML del pronóstico
             forecastDay.innerHTML = `
                 <p class="forecast-date">${dayName}</p>
-                <img src="${iconUrl}" alt="${day.weather[0].description}" class="forecast-icon">
+                <img src="${iconUrl}" alt="${description}" class="forecast-icon">
                 <p class="forecast-temp">${temp}°F</p>
             `;
             
-            // Add to forecast container
+            // Añadir al contenedor
             forecastContainer.appendChild(forecastDay);
         });
     } catch (error) {
@@ -269,5 +291,5 @@ function displayForecastError() {
 document.addEventListener('DOMContentLoaded', function() {
     // Obtener el clima actual y el pronóstico
     fetchCurrentWeather();
-    fetchWeatherForecast();
+    fetchForecast();
 });

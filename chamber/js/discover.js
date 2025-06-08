@@ -34,7 +34,7 @@ function displayAttractions(attractions) {
         
         card.innerHTML = `
             <figure>
-                <img src="placeholder.webp" data-src="${attraction.image}" alt="${attraction.name}" loading="lazy" class="lazy-load-placeholder">
+                <img src="images/discover/placeholder.webp" data-src="${attraction.image}" alt="${attraction.name}" loading="lazy" class="lazy-load-placeholder">
             </figure>
             <div class="card-content">
                 <h2>${attraction.name}</h2>
@@ -46,6 +46,9 @@ function displayAttractions(attractions) {
         
         container.appendChild(card);
     });
+    
+    // Iniciar lazy loading después de crear las tarjetas
+    initLazyLoading();
 }
 
 // Function to display last visit message
@@ -84,8 +87,8 @@ function displayLastVisitMessage() {
     localStorage.setItem('lastVisit', currentDate);
 }
 
-// Implement lazy loading for images
-document.addEventListener('DOMContentLoaded', function() {
+// Function to initialize lazy loading for images
+function initLazyLoading() {
     // Check if the browser supports IntersectionObserver
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -94,13 +97,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     const img = entry.target;
                     const src = img.getAttribute('data-src');
                     if (src) {
-                        img.src = src;
-                        img.removeAttribute('data-src');
-                        img.classList.remove('lazy-load-placeholder');
+                        // Crear una nueva imagen para precargar
+                        const newImg = new Image();
+                        newImg.onload = function() {
+                            // Una vez cargada la imagen, actualizar la src
+                            img.src = src;
+                            img.removeAttribute('data-src');
+                            img.classList.remove('lazy-load-placeholder');
+                        };
+                        newImg.src = src;
                     }
                     imageObserver.unobserve(img);
                 }
             });
+        }, {
+            rootMargin: '50px 0px', // Cargar imágenes cuando estén a 50px de entrar en la pantalla
+            threshold: 0.1 // Cargar cuando al menos el 10% de la imagen sea visible
         });
         
         // Observe all images with data-src attribute
@@ -122,9 +134,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if ((img.getBoundingClientRect().top <= window.innerHeight && 
                      img.getBoundingClientRect().bottom >= 0) && 
                     getComputedStyle(img).display !== 'none') {
-                    img.src = img.getAttribute('data-src');
-                    img.removeAttribute('data-src');
-                    img.classList.remove('lazy-load-placeholder');
+                    const src = img.getAttribute('data-src');
+                    if (src) {
+                        img.src = src;
+                        img.removeAttribute('data-src');
+                        img.classList.remove('lazy-load-placeholder');
+                    }
                 }
             });
         };
@@ -134,4 +149,4 @@ document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('orientationchange', lazyLoadImages);
         lazyLoadImages();
     }
-});
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover page of the Boise Chamber of Commerce, Idaho - Explore attractions and points of interest in Boise">
+    <meta name="author" content="Cristobal Figueroa">
+    
+    <!-- Facebook Open Graph meta tags -->
+    <meta property="og:title" content="Discover Boise - Chamber of Commerce">
+    <meta property="og:description" content="Explore the attractions and points of interest in Boise, Idaho - Discover what makes our city special">
+    <meta property="og:image" content="images/logo.svg">
+    <meta property="og:url" content="https://cristobal-figueroa.github.io/wdd231/chamber/discover.html">
+    
+    <title>Discover | Boise Chamber of Commerce</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.svg">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/medium.css">
+    <link rel="stylesheet" href="css/large.css">
+    <link rel="stylesheet" href="css/discover.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="images/logo.svg" alt="Boise Chamber of Commerce Logo">
+                <div class="site-name">
+                    <h1>Chamber of Commerce</h1>
+                    <h2>Boise, Idaho</h2>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <button id="hamburger-btn">&#9776;</button>
+                    <ul id="primary-nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active"><a href="discover.html">Discover</a></li>
+                        <li><a href="directory.html">Directory</a></li>
+                        <li><a href="join.html">Join</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main class="discover-main">
+        <h1>Discover Boise</h1>
+        
+        <!-- Sidebar with visit information -->
+        <section class="sidebar">
+            <h2>Your Visits</h2>
+            <p id="visit-message" class="visit-message">
+                <!-- Visit message will be populated by JavaScript -->
+            </p>
+        </section>
+        
+        <!-- Introduction -->
+        <section class="intro">
+            <h2>Welcome to Beautiful Boise</h2>
+            <p>Nestled in the Treasure Valley, Boise offers a perfect blend of urban amenities and outdoor adventures. As Idaho's capital and largest city, Boise combines a thriving business environment with exceptional quality of life. Explore our top attractions below and discover why Boise is consistently ranked as one of America's most livable cities.</p>
+        </section>
+        
+        <!-- Attractions Grid Container -->
+        <section class="attractions-section">
+            <h2>Top Attractions</h2>
+            <div class="attractions-container">
+                <!-- Attractions will be populated by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- Demographics Section -->
+        <section class="demographics">
+            <h2>Boise Demographics</h2>
+            <div class="demographics-content">
+                <div class="demographics-item">
+                    <h3>Population</h3>
+                    <p>235,684 (2023 estimate)</p>
+                </div>
+                <div class="demographics-item">
+                    <h3>Median Age</h3>
+                    <p>36.8 years</p>
+                </div>
+                <div class="demographics-item">
+                    <h3>Median Household Income</h3>
+                    <p>$71,570</p>
+                </div>
+                <div class="demographics-item">
+                    <h3>Education</h3>
+                    <p>44.5% of residents have a bachelor's degree or higher</p>
+                </div>
+                <div class="demographics-item">
+                    <h3>Climate</h3>
+                    <p>Four distinct seasons with 220+ sunny days per year</p>
+                </div>
+                <div class="demographics-item">
+                    <h3>Major Industries</h3>
+                    <p>Technology, healthcare, government, education, and manufacturing</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="images/logo.svg" alt="Boise Chamber of Commerce Logo">
+                <div class="footer-name">
+                    <h3>Boise Chamber of Commerce</h3>
+                    <p>1234 Main Street, Boise, ID 83702</p>
+                </div>
+            </div>
+            <div class="footer-contact">
+                <p>info@boisechamber.org</p>
+                <p>(208) 555-1234</p>
+                <p><a href="https://maps.google.com">Location Map</a></p>
+            </div>
+        </div>
+        <div class="footer-base">
+            <p>&copy; <span id="current-year"></span> Boise Chamber of Commerce | Cristobal Figueroa | WDD 231</p>
+            <p>Last Modified: <span id="last-modified"></span></p>
+        </div>
+    </footer>
+    
+    <script src="js/script.js"></script>
+    <script src="js/discover.js"></script>
+</body>
+</html>

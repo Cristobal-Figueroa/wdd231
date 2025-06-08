@@ -1,0 +1,52 @@
+{
+  "attractions": [
+    {
+      "name": "Idaho State Capitol",
+      "address": "700 W Jefferson St, Boise, ID 83702",
+      "description": "The Idaho State Capitol in Boise is a neoclassical building completed in 1920. Visitors can explore its marble columns, rotunda, and historical exhibits showcasing Idaho's political history.",
+      "image": "images/discover/capitol.webp"
+    },
+    {
+      "name": "Boise River Greenbelt",
+      "address": "Spans 25 miles along the Boise River",
+      "description": "A 25-mile tree-lined pathway following the Boise River through the heart of the city. Perfect for walking, jogging, cycling, and wildlife viewing with numerous parks and scenic spots along the way.",
+      "image": "images/discover/greenbelt.webp"
+    },
+    {
+      "name": "Boise Art Museum",
+      "address": "670 Julia Davis Dr, Boise, ID 83702",
+      "description": "Founded in 1937, the museum features contemporary works of art, ceramics, and photography exhibitions. The permanent collection includes over 4,000 works with a focus on 20th-century American art.",
+      "image": "images/discover/art-museum.webp"
+    },
+    {
+      "name": "Idaho Botanical Garden",
+      "address": "2355 N Old Penitentiary Rd, Boise, ID 83712",
+      "description": "A 15-acre living museum with themed gardens, plant collections, and seasonal displays. The garden hosts popular events like Winter Garden aGlow and summer concerts in a beautiful natural setting.",
+      "image": "images/discover/botanical-garden.webp"
+    },
+    {
+      "name": "World Center for Birds of Prey",
+      "address": "5668 W Flying Hawk Ln, Boise, ID 83709",
+      "description": "The headquarters of The Peregrine Fund, this center offers close encounters with eagles, falcons, and owls. Learn about conservation efforts and enjoy live raptor demonstrations.",
+      "image": "images/discover/birds-of-prey.webp"
+    },
+    {
+      "name": "Bogus Basin Mountain Recreation Area",
+      "address": "2600 N Bogus Basin Rd, Boise, ID 83702",
+      "description": "A year-round recreation area just 16 miles from downtown Boise. Offers skiing and snowboarding in winter, and mountain biking, hiking, and scenic chairlift rides in summer.",
+      "image": "images/discover/bogus-basin.webp"
+    },
+    {
+      "name": "Old Idaho Penitentiary",
+      "address": "2445 Old Penitentiary Rd, Boise, ID 83712",
+      "description": "A historic prison that operated from 1872 to 1973. Now a museum where visitors can tour cell blocks, solitary confinement, and gallows while learning about prison life and notorious inmates.",
+      "image": "images/discover/penitentiary.webp"
+    },
+    {
+      "name": "Basque Block",
+      "address": "Grove St between 6th and Capitol Blvd, Boise, ID 83702",
+      "description": "A cultural district celebrating Boise's Basque heritage. Features the Basque Museum & Cultural Center, traditional restaurants, a community center, and distinctive public art.",
+      "image": "images/discover/basque-block.webp"
+    }
+  ]
+}
